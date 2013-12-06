@@ -5,6 +5,23 @@ This document is **work in progress**. It contains the specification of the
 hash-URI approach.
 
 
+Example
+-------
+
+Generally, hash-URIs are URIs that contain a certain kind of hash value that
+can be used to verify the respective resource. This is an example of a
+hash-URI:
+
+    http://example.org/np1.RAcbjcRIQozo2wBMq4WcCYkFAjRz0AX-Ux3PquZZrC68s
+
+The last 45 characters of this URI (after the period symobl `.`) are the
+hash-URI part. The first two characters of the hash-URI part (`RA` in this
+example) define the type and version of the algorithm. Only `FA` for plain
+file content and `RA` for sets of RDF graphs are supported at this point.
+The remaining 43 characters are the actual hash value that represents the
+content of the resource this URI represents.
+
+
 Implementations
 ---------------
 
@@ -18,14 +35,14 @@ There are currently three (partial) implementations:
 Basics
 ------
 
-Generally, hash-URIs are URIs that contain a certain kind of hash value. This
-hash value is encoded in Base64 notation with some common modifications for
-making it safe to use in URIs and filenames:
+Hash values of hash-URIs are encoded in Base64 notation with some common
+modifications for making it safe to use them in URIs and filenames:
 
 **Definition.**
-Every character that is a standard ASCII letter (A-Z or a-z), a digit (0-9), a
-hyphen (-), or an underscore ( _ ) is called a _Base64 character_, representing
-in this order the numbers from 0 to 63. There are no other Base64 characters.
+Every character that is a standard ASCII letter (`A-Z` or `a-z`), a digit
+(`0-9`), a hyphen (`-`), or an underscore (`_`) is called a _Base64
+character_, representing in this order the numbers from 0 to 63. There are no
+other Base64 characters.
 
 As everybody who has access to the respective domain is free to define and use
 URIs at will, we can only be sure that a certain URI is a hash-URI once we
@@ -63,5 +80,9 @@ resource_.
 We can append a file extension like `.txt` or `.trig` to a hash-URI. The
 resulting URIs are technically no hash-URIs anymore, but it is easy to strip
 the extension and get the respective hash-URI from it.
+
+
+Algorithms
+==========
 
 ...
