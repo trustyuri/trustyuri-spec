@@ -83,6 +83,6 @@ the extension and get the respective hash-URI from it.
 
 
 Algorithms
-==========
+----------
 
 ...
