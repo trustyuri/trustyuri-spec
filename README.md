@@ -5,6 +5,13 @@ This document is **work in progress**. It contains the specification of the
 hash-URI approach.
 
 
+Article
+-------
+
+An article describing the approach is available as a preprint:
+http://arxiv.org/abs/1401.5775
+
+
 Example
 -------
 
