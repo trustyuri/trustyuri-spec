@@ -2,7 +2,7 @@ Trusty URI Specification
 ========================
 
 This document is **work in progress**. It contains the specification of the
-_Trusty URI_ approach.
+_trusty URI_ approach (previously called _hash-URIs_).
 
 
 Article
