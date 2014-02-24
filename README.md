@@ -103,7 +103,7 @@ A hash value is calculated using SHA-256 on the content of the file in byte repr
 
 For empty files, for example, we get the following URI suffix:
 
-> FA47DEQpj8HBSa-_TImW-5JCeuQeRkm5NMpJWZG3hSuFU
+    FA47DEQpj8HBSa-_TImW-5JCeuQeRkm5NMpJWZG3hSuFU
 
 In general, when adding such a suffix to a URI, it has to be made sure that it is preceded by a non-Base64 character, such as a dot (`.`), a slash (`/`), or a hash sign (`#`).
 
@@ -114,13 +114,13 @@ Version A of algorithm R (i.e. `RA`) works on RDF content, possibly covering mul
 
 This algorithm does not allow for blank nodes, because they make graph normalization much more difficult (future versions might support it though). The algorithm supports, however, that the trusty URI itself appears in the RDF data it represents, including extended URIs such as:
 
-> http://example.org/r2.RA5AbXdpz5DcaYXCh9l3eI9ruBosiL5XDU3rxBbBaUO70.Part1
-> http://example.org/r2.RA5AbXdpz5DcaYXCh9l3eI9ruBosiL5XDU3rxBbBaUO70.Part2
+    http://example.org/r2.RA5AbXdpz5DcaYXCh9l3eI9ruBosiL5XDU3rxBbBaUO70.Part1
+    http://example.org/r2.RA5AbXdpz5DcaYXCh9l3eI9ruBosiL5XDU3rxBbBaUO70.Part2
 
 This can also be used to handle blank nodes. For example, blank nodes can be transformed into URIs of the form:
 
-> http://example.org/r2.RA5AbXdpz5DcaYXCh9l3eI9ruBosiL5XDU3rxBbBaUO70..1
-> http://example.org/r2.RA5AbXdpz5DcaYXCh9l3eI9ruBosiL5XDU3rxBbBaUO70..2
+    http://example.org/r2.RA5AbXdpz5DcaYXCh9l3eI9ruBosiL5XDU3rxBbBaUO70..1
+    http://example.org/r2.RA5AbXdpz5DcaYXCh9l3eI9ruBosiL5XDU3rxBbBaUO70..2
 
 It is assumed that the data is a set of named RDF graphs. For sets of RDF triples without a named graph, they are all considered to belong to a special named graph that is represented with the empty string.
 
