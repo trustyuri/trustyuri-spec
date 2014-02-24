@@ -1,8 +1,8 @@
-Hash-URI Specification
-======================
+Trusty URI Specification
+========================
 
 This document is **work in progress**. It contains the specification of the
-hash-URI approach.
+_Trusty URI_ approach.
 
 
 Article
@@ -15,18 +15,18 @@ http://arxiv.org/abs/1401.5775
 Example
 -------
 
-Generally, hash-URIs are URIs that contain a certain kind of hash value that
+Generally, trusty URIs are URIs that contain a certain kind of hash value that
 can be used to verify the respective resource. This is an example of a
-hash-URI:
+trusty URI:
 
-    http://example.org/np1.RAcbjcRIQozo2wBMq4WcCYkFAjRz0AX-Ux3PquZZrC68s
+    http://example.org/r1.RAcbjcRIQozo2wBMq4WcCYkFAjRz0AX-Ux3PquZZrC68s
 
 The last 45 characters of this URI (after the period symobl `.`) are the
-hash-URI part. The first two characters of the hash-URI part (`RA` in this
-example) define the type and version of the algorithm. Only `FA` for plain
-file content and `RA` for sets of RDF graphs are supported at this point.
-The remaining 43 characters are the actual hash value that represents the
-content of the resource this URI represents.
+tail of the trusty URI. The first two characters of the tail (`RA` in this
+example) define the type and version of the algorithm. (Only `FA` for plain
+file content and `RA` for sets of RDF graphs are supported at this point.)
+The remaining 43 characters are the hash part of the trusty URI. This hash
+can be used to check the content of the resource this URI represents.
 
 
 Implementations
@@ -34,15 +34,15 @@ Implementations
 
 There are currently three (partial) implementations:
 
-- hashuri-java: https://github.com/tkuhn/hashuri-java
-- hashuri-perl: https://github.com/tkuhn/hashuri-perl
-- hashuri-python: https://github.com/tkuhn/hashuri-python
+- trustyuri-java: https://github.com/trustyuri/trustyuri-java
+- trustyuri-perl: https://github.com/trustyuri/trustyuri-perl
+- trustyuri-python: https://github.com/trustyuri/trustyuri-python
 
 
 Basics
 ------
 
-Hash values of hash-URIs are encoded in Base64 notation with some common
+Hash values of trusty URIs are encoded in Base64 notation with some common
 modifications for making it safe to use them in URIs and filenames:
 
 > **Definition.**
@@ -52,41 +52,41 @@ modifications for making it safe to use them in URIs and filenames:
 > other Base64 characters.
 
 As everybody who has access to the respective domain is free to define and use
-URIs at will, we can only be sure that a certain URI is a hash-URI once we
+URIs at will, we can only be sure that a certain URI is a trusty URI once we
 have found and verified a content that matches the hash. For that reason, we
-need to introduce the concept of a _potential hash-URI_:
+need to introduce the concept of a _potential trusty URI_:
 
 > **Definition.**
 > If the last 25 characters of a URI are all Base64 characters, then this URI
-> is a _potential hash-URI_.
+> is a _potential trusty URI_. The sequence of characters following the last
+> non-Base64 character is called the _tail_.
 
 Our concrete proposals only generate URIs with exactly 45 trailing Base64
 characters, but we keep the definition open for future additions and
 extensions. Such character sequences consist of two parts:
 
 > **Definition.**
-> The two characters immediately following the last non-Base64 character of a
-> potential hash-URI are called _identifier part_. The sequence of characters
-> following the identifier part is called _data part_, which is identical to or
-> contains a _hash part_.
+> The first two characters of the tail of a potential trusty URI are called its
+> _identifier part_. The sequence of characters following the identifier part
+> is called _data part_, which is identical to or contains a _hash part_.
 
 The first character of the _identifier part_ specifies the type of content
 and therefore the type of algorithm; the second character is a version number
 of the algorithm. The main content of the _data part_ is the hash value, but
 it can also contain other information such as parameters and sub-types. Its
 concrete structure depends on the algorithm. With these ingredients,
-hash-URIs can be _verified_:
+trusty URIs can be _verified_:
 
 > **Definition.**
-> Given a potential hash-URI and a digital artifact, if the identifier part
+> Given a potential trusty URI and a digital artifact, if the identifier part
 > refers to an algorithm that returns a hash value for the digital artifact
 > that is identical to the one encoded in the hash part, then the potential
-> hash-URI is a _verified hash-URI_ and the digital artifact is its _verified
-> resource_.
+> trusty URI is a _verified trusty URI_ and the digital artifact is its
+> _verified content_.
 
-We can append a file extension like `.txt` or `.nq` to a hash-URI. The
-resulting URIs are technically no hash-URIs anymore, but it is easy to strip
-the extension and get the respective hash-URI from it.
+We can append a file extension like `.txt` or `.nq` to a trusty URI. The
+resulting URIs are technically no trusty URIs anymore, but it is easy to strip
+the extension and get the respective trusty URI from it.
 
 
 Algorithms
@@ -99,7 +99,7 @@ There are currently two algorithms available: `RA` and `FA`.
 
 Version A of algorithm F (i.e. `FA`) works on the byte content of files.
 
-A hash value is calculated using SHA-256 on the content of the file in byte representation. The file name and other metadata are not considered. Two zero-bits are appended to the resulting hash value, and then transformed to Base64 notation as described above. The resulting 43 characters make up the data part of the hash-URI.
+A hash value is calculated using SHA-256 on the content of the file in byte representation. The file name and other metadata are not considered. Two zero-bits are appended to the resulting hash value, and then transformed to Base64 notation as described above. The resulting 43 characters make up the data part of the trusty URI.
 
 For empty files, for example, we get the following URI suffix:
 
@@ -112,19 +112,19 @@ In general, when adding such a suffix to a URI, it has to be made sure that it i
 
 Version A of algorithm R (i.e. `RA`) works on RDF content, possibly covering multiple named graphs.
 
-This algorithm does not allow for blank nodes, because they make graph normalization much more difficult (future versions might support it though). The algorithm supports, however, that the hash-URI itself appears in the RDF data it represents, including extended URIs such as:
+This algorithm does not allow for blank nodes, because they make graph normalization much more difficult (future versions might support it though). The algorithm supports, however, that the trusty URI itself appears in the RDF data it represents, including extended URIs such as:
 
-> http://example.org/resource1.RA5AbXdpz5DcaYXCh9l3eI9ruBosiL5XDU3rxBbBaUO70.Part1
-> http://example.org/resource2.RA5AbXdpz5DcaYXCh9l3eI9ruBosiL5XDU3rxBbBaUO70.Part2
+> http://example.org/r2.RA5AbXdpz5DcaYXCh9l3eI9ruBosiL5XDU3rxBbBaUO70.Part1
+> http://example.org/r2.RA5AbXdpz5DcaYXCh9l3eI9ruBosiL5XDU3rxBbBaUO70.Part2
 
 This can also be used to handle blank nodes. For example, blank nodes can be transformed into URIs of the form:
 
-> http://example.org/resource1.RA5AbXdpz5DcaYXCh9l3eI9ruBosiL5XDU3rxBbBaUO70..1
-> http://example.org/resource1.RA5AbXdpz5DcaYXCh9l3eI9ruBosiL5XDU3rxBbBaUO70..2
+> http://example.org/r2.RA5AbXdpz5DcaYXCh9l3eI9ruBosiL5XDU3rxBbBaUO70..1
+> http://example.org/r2.RA5AbXdpz5DcaYXCh9l3eI9ruBosiL5XDU3rxBbBaUO70..2
 
 It is assumed that the data is a set of named RDF graphs. For sets of RDF triples without a named graph, they are all considered to belong to a special named graph that is represented with the empty string.
 
-To check whether a given hash _h_ correctly represents a given set of named graphs, we first have to sort the triples of all named graphs. Because the hash-URI can appear in the RDF data it represents, we first have to replace all occurrences of _h_ in the URIs by a blank character in a preprocessing step. To determine the order of any two triples, the first applicable rule of the following list is applied:
+To check whether a given hash _h_ correctly represents a given set of named graphs, we first have to sort the triples of all named graphs. Because the trusty URI can appear in the RDF data it represents, we first have to replace all occurrences of _h_ in the URIs by a blank character in a preprocessing step. To determine the order of any two triples, the first applicable rule of the following list is applied:
 
 1. If their graph URIs differ, the triple with the lexicographically smaller preprocessed graph URI is first.
 2. If their subject URIs differ, the triple with the lexicographically smaller preprocessed subject URI is first.
