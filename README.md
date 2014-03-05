@@ -130,7 +130,7 @@ Blank nodes are not supported and have to be skolemized when a trusty URI is pro
 
 It is assumed that the data is a set of named RDF graphs. RDF triples without a named graph are considered to belong to a special named graph represented with the empty string.
 
-To check whether a given hash _h_ correctly represents a given set of named graphs, first the triples and graphs have to be sorted. Because the trusty URI can appear in the RDF data it represents, all occurrences of _h_ in the URIs have to be replaced by a blank character in a preprocessing step. To determine the order of any two triples, the first applicable rule of the following list is applied:
+To check whether a given artifact code _c_ correctly represents a given set of named graphs, first the triples and graphs have to be sorted. Because the trusty URI can appear in the RDF data it represents, all occurrences of _c_ in the URIs have to be replaced by a blank character in a preprocessing step. To determine the order of any two triples, the first applicable rule of the following list is applied:
 
 1. If their graph URIs differ, the triple with the lexicographically smaller preprocessed graph URI is first.
 2. If their subject URIs differ, the triple with the lexicographically smaller preprocessed subject URI is first.
