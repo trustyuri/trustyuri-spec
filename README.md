@@ -61,12 +61,11 @@ Trusty URIs have the following structure:
 > is called _data part_, which is identical to or contains a _hash part_.
 
 The current modules only generate URIs with exactly 45 trailing Base64
-characters, but we keep the definition open for future additions and
-extensions.
+characters, but we keep the definition open for future modules.
 
-The first character of the _module identifier_ specifies the type of content
+The first character of the module identifier specifies the type of content
 and therefore the type of module; the second character is a version number
-of the module. The main content of the _data part_ is the hash value, but
+of the module. The main content of the data part is the hash value, but
 it can also contain other information such as parameters and sub-types. Its
 concrete structure depends on the module.
 
@@ -82,7 +81,7 @@ need to introduce the concept of a _potential trusty URI_:
 > module (in particular with respect to its length) is called a _potential
 > trusty URI_.
 
-With these ingredients, trusty URIs can be _verified_:
+With these ingredients, trusty URIs can be verified:
 
 > **Definition 4.**
 > Given a potential trusty URI and a digital artifact, if the identifier part
@@ -104,11 +103,11 @@ There are currently two modules available: `RA` and `FA`.
 
 ### Module FA
 
-Version A of module type F (i.e. `FA`) works on the byte content of files.
+Version A of module type F, i.e. module `FA`, works on the byte content of files.
 
-A hash value is calculated using SHA-256 on the content of the file in byte representation. The file name and other metadata are not considered. Two zero-bits are appended to the resulting hash value, and then transformed to Base64 notation as described above. The resulting 43 characters make up the data part of the trusty URI.
+A hash value is calculated using SHA-256 on the content of the file in byte representation. The file name and other metadata are not considered. Two zero-bits are appended to the resulting hash value, and then transformed to Base64 notation as defined above. The resulting 43 characters make up the data part of the trusty URI.
 
-For empty files, for example, we get the following URI suffix:
+Empty files, for example, get the following URI suffix:
 
     FA47DEQpj8HBSa-_TImW-5JCeuQeRkm5NMpJWZG3hSuFU
 
@@ -117,21 +116,21 @@ In general, when adding such a suffix to a URI, it has to be made sure that it i
 
 ### Module RA
 
-Version A of module type R (i.e. `RA`) works on RDF content, possibly covering multiple named graphs.
+Version A of module type R, i.e. module `RA`, works on RDF content, possibly covering multiple named graphs.
 
-This module does not allow for blank nodes, because they make graph normalization much more difficult (future versions might support it though). The module supports, however, that the trusty URI itself appears in the RDF data it represents, including extended URIs such as:
+This module allows for self-references, i.e. the trusty URI itself may appear in the RDF data it represents. URIs consisting of the given trusty URI and a suffix are also supported, such as:
 
     http://example.org/r2.RA5AbXdpz5DcaYXCh9l3eI9ruBosiL5XDU3rxBbBaUO70.Part1
     http://example.org/r2.RA5AbXdpz5DcaYXCh9l3eI9ruBosiL5XDU3rxBbBaUO70.Part2
 
-This can also be used to handle blank nodes. For example, blank nodes can be transformed into URIs of the form:
+Blank nodes are not supported and have to be skolemized when a trusty URI is produced. For example, blank nodes can be transformed into URIs of the following form:
 
     http://example.org/r2.RA5AbXdpz5DcaYXCh9l3eI9ruBosiL5XDU3rxBbBaUO70..1
     http://example.org/r2.RA5AbXdpz5DcaYXCh9l3eI9ruBosiL5XDU3rxBbBaUO70..2
 
-It is assumed that the data is a set of named RDF graphs. For sets of RDF triples without a named graph, they are all considered to belong to a special named graph that is represented with the empty string.
+It is assumed that the data is a set of named RDF graphs. RDF triples without a named graph are considered to belong to a special named graph represented with the empty string.
 
-To check whether a given hash _h_ correctly represents a given set of named graphs, we first have to sort the triples of all named graphs. Because the trusty URI can appear in the RDF data it represents, we first have to replace all occurrences of _h_ in the URIs by a blank character in a preprocessing step. To determine the order of any two triples, the first applicable rule of the following list is applied:
+To check whether a given hash _h_ correctly represents a given set of named graphs, first the triples and graphs have to be sorted. Because the trusty URI can appear in the RDF data it represents, all occurrences of _h_ in the URIs have to be replaced by a blank character in a preprocessing step. To determine the order of any two triples, the first applicable rule of the following list is applied:
 
 1. If their graph URIs differ, the triple with the lexicographically smaller preprocessed graph URI is first.
 2. If their subject URIs differ, the triple with the lexicographically smaller preprocessed subject URI is first.
