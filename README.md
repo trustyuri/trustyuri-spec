@@ -45,48 +45,55 @@ Basics
 Hash values of trusty URIs are encoded in Base64 notation with some common
 modifications for making it safe to use them in URIs and filenames:
 
-> **Definition.**
+> **Definition 1.**
 > Every character that is a standard ASCII letter (`A-Z` or `a-z`), a digit
 > (`0-9`), a hyphen (`-`), or an underscore (`_`) is called a _Base64
 > character_, representing in this order the numbers from 0 to 63. There are no
 > other Base64 characters.
+
+Trusty URIs have the following structure:
+
+> **Definition 2.**
+> Every trusty URI ends with at least 25 Base64 characters. The sequence of
+> characters following the last non-Base64 character is called the _artifact
+> code_. The first two characters of the artifact code are called the _module
+> identifier_. The sequence of characters following the module identifier
+> is called _data part_, which is identical to or contains a _hash part_.
+
+The current modules only generate URIs with exactly 45 trailing Base64
+characters, but we keep the definition open for future additions and
+extensions.
+
+The first character of the _module identifier_ specifies the type of content
+and therefore the type of module; the second character is a version number
+of the module. The main content of the _data part_ is the hash value, but
+it can also contain other information such as parameters and sub-types. Its
+concrete structure depends on the module.
 
 As everybody who has access to the respective domain is free to define and use
 URIs at will, we can only be sure that a certain URI is a trusty URI once we
 have found and verified a content that matches the hash. For that reason, we
 need to introduce the concept of a _potential trusty URI_:
 
-> **Definition.**
-> If the last 25 characters of a URI are all Base64 characters, then this URI
-> is a _potential trusty URI_. The sequence of characters following the last
-> non-Base64 character is called the _tail_.
+> **Definition 3.**
+> Every URI that could be a trusty URI according to the restrictions of
+> Definition 2, that has a module identifier matching a defined module, and
+> whose data part is consistent with the structural restrictions of the given
+> module (in particular with respect to its length) is called a _potential
+> trusty URI_.
 
-Our concrete proposals only generate URIs with exactly 45 trailing Base64
-characters, but we keep the definition open for future additions and
-extensions. Such character sequences consist of two parts:
+With these ingredients, trusty URIs can be _verified_:
 
-> **Definition.**
-> The first two characters of the tail of a potential trusty URI are called its
-> _identifier part_. The sequence of characters following the identifier part
-> is called _data part_, which is identical to or contains a _hash part_.
-
-The first character of the _identifier part_ specifies the type of content
-and therefore the type of module; the second character is a version number
-of the module. The main content of the _data part_ is the hash value, but
-it can also contain other information such as parameters and sub-types. Its
-concrete structure depends on the module. With these ingredients,
-trusty URIs can be _verified_:
-
-> **Definition.**
+> **Definition 4.**
 > Given a potential trusty URI and a digital artifact, if the identifier part
 > refers to an module that returns a hash value for the digital artifact
 > that is identical to the one encoded in the hash part, then the potential
 > trusty URI is a _verified trusty URI_ and the digital artifact is its
 > _verified content_.
 
-We can append a file extension like `.txt` or `.nq` to a trusty URI. The
-resulting URIs are technically no trusty URIs anymore, but it is easy to strip
-the extension and get the respective trusty URI from it.
+For convenience reasons, we can append a file extension like `.txt` or `.nq`
+to trusty URIs. The resulting URIs are technically no trusty URIs anymore, but
+it is easy to strip the extension and get the respective trusty URIs.
 
 
 Modules
