@@ -23,7 +23,7 @@ trusty URI:
 
 The last 45 characters of this URI (after the period symobl `.`) are the
 tail of the trusty URI. The first two characters of the tail (`RA` in this
-example) define the type and version of the algorithm. (Only `FA` for plain
+example) define the type and version of the module. (Only `FA` for plain
 file content and `RA` for sets of RDF graphs are supported at this point.)
 The remaining 43 characters are the hash part of the trusty URI. This hash
 can be used to check the content of the resource this URI represents.
@@ -71,15 +71,15 @@ extensions. Such character sequences consist of two parts:
 > is called _data part_, which is identical to or contains a _hash part_.
 
 The first character of the _identifier part_ specifies the type of content
-and therefore the type of algorithm; the second character is a version number
-of the algorithm. The main content of the _data part_ is the hash value, but
+and therefore the type of module; the second character is a version number
+of the module. The main content of the _data part_ is the hash value, but
 it can also contain other information such as parameters and sub-types. Its
-concrete structure depends on the algorithm. With these ingredients,
+concrete structure depends on the module. With these ingredients,
 trusty URIs can be _verified_:
 
 > **Definition.**
 > Given a potential trusty URI and a digital artifact, if the identifier part
-> refers to an algorithm that returns a hash value for the digital artifact
+> refers to an module that returns a hash value for the digital artifact
 > that is identical to the one encoded in the hash part, then the potential
 > trusty URI is a _verified trusty URI_ and the digital artifact is its
 > _verified content_.
@@ -89,15 +89,15 @@ resulting URIs are technically no trusty URIs anymore, but it is easy to strip
 the extension and get the respective trusty URI from it.
 
 
-Algorithms
-----------
+Modules
+-------
 
-There are currently two algorithms available: `RA` and `FA`.
+There are currently two modules available: `RA` and `FA`.
 
 
-### Algorithm FA
+### Module FA
 
-Version A of algorithm F (i.e. `FA`) works on the byte content of files.
+Version A of module type F (i.e. `FA`) works on the byte content of files.
 
 A hash value is calculated using SHA-256 on the content of the file in byte representation. The file name and other metadata are not considered. Two zero-bits are appended to the resulting hash value, and then transformed to Base64 notation as described above. The resulting 43 characters make up the data part of the trusty URI.
 
@@ -108,11 +108,11 @@ For empty files, for example, we get the following URI suffix:
 In general, when adding such a suffix to a URI, it has to be made sure that it is preceded by a non-Base64 character, such as a dot (`.`), a slash (`/`), or a hash sign (`#`).
 
 
-### Algorithm RA
+### Module RA
 
-Version A of algorithm R (i.e. `RA`) works on RDF content, possibly covering multiple named graphs.
+Version A of module type R (i.e. `RA`) works on RDF content, possibly covering multiple named graphs.
 
-This algorithm does not allow for blank nodes, because they make graph normalization much more difficult (future versions might support it though). The algorithm supports, however, that the trusty URI itself appears in the RDF data it represents, including extended URIs such as:
+This module does not allow for blank nodes, because they make graph normalization much more difficult (future versions might support it though). The module supports, however, that the trusty URI itself appears in the RDF data it represents, including extended URIs such as:
 
     http://example.org/r2.RA5AbXdpz5DcaYXCh9l3eI9ruBosiL5XDU3rxBbBaUO70.Part1
     http://example.org/r2.RA5AbXdpz5DcaYXCh9l3eI9ruBosiL5XDU3rxBbBaUO70.Part2
@@ -140,5 +140,5 @@ The lexicographic order is defined on strings of Unicode characters. If two stri
 
 After the triples have been sorted, a sequence of Unicode characters _s_ is built. For each triple, the serialization of its graph, its subject, its predicate, and its object are added to the end of _s_, in this order and with a newline character at the end of each of the four. The serialization of graph, subject, and predicate identifiers is simply their preprocessed URI string. Objects that consist of a URI are treated the same way. Literals with a datatype are serialized as a circumflex character (`^`) followed by the datatype URI, a blank space, and the escaped literal string. Literal strings are escaped by replacing `\` by `\\` and newline characters by `\n`. Literals with a language property are serialized as an at-sign `@` followed by the language string, a blank space, and the escaped literal string. Other literals are serialized as a hash sign `#` followed by the escaped literal string.
 
-The actual computation of the hash data is identical to Algorithm F: a SHA-256 hash is generated for _s_ in UTF-8 encoding, two zero-bits are appended, and the result is transformed to Base64 notation.
+The actual computation of the hash data is identical to Module F: a SHA-256 hash is generated for _s_ in UTF-8 encoding, two zero-bits are appended, and the result is transformed to Base64 notation.
 
