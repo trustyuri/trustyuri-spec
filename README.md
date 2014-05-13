@@ -120,13 +120,13 @@ Version A of module type R, i.e. module `RA`, works on RDF content, possibly cov
 
 This module allows for self-references, i.e. the trusty URI itself may appear in the RDF data it represents. URIs consisting of the given trusty URI and a suffix are also supported, such as:
 
-    http://example.org/r2.RA5AbXdpz5DcaYXCh9l3eI9ruBosiL5XDU3rxBbBaUO70.Part1
-    http://example.org/r2.RA5AbXdpz5DcaYXCh9l3eI9ruBosiL5XDU3rxBbBaUO70.Part2
+    http://example.org/r2.RA5AbXdpz5DcaYXCh9l3eI9ruBosiL5XDU3rxBbBaUO70#Part1
+    http://example.org/r2.RA5AbXdpz5DcaYXCh9l3eI9ruBosiL5XDU3rxBbBaUO70#Part2
 
 Blank nodes are not supported and have to be skolemized when a trusty URI is produced. For example, blank nodes can be transformed into URIs of the following form:
 
-    http://example.org/r2.RA5AbXdpz5DcaYXCh9l3eI9ruBosiL5XDU3rxBbBaUO70..1
-    http://example.org/r2.RA5AbXdpz5DcaYXCh9l3eI9ruBosiL5XDU3rxBbBaUO70..2
+    http://example.org/r2.RA5AbXdpz5DcaYXCh9l3eI9ruBosiL5XDU3rxBbBaUO70#_1
+    http://example.org/r2.RA5AbXdpz5DcaYXCh9l3eI9ruBosiL5XDU3rxBbBaUO70#_2
 
 It is assumed that the data is a set of named RDF graphs. RDF triples without a named graph are considered to belong to a special named graph represented with the empty string.
 
