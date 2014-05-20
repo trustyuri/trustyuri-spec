@@ -3,44 +3,7 @@ Trusty URI Specification
 
 This document contains the specification of the _trusty URI_ approach
 (previously called _hash-URIs_).
-
-
-Article
--------
-
-The following article introduces the trusty URI approach:
-
-> Tobias Kuhn and Michel Dumontier. Trusty URIs: Verifiable, Immutable, and
-> Permanent Digital Artifacts for Linked Data. In _Proceedings of the 11th
-> Extended Semantic Web Conference (ESWC)_. Springer, 2014.
-> http://arxiv.org/abs/1401.5775
-
-
-Example
--------
-
-Generally, trusty URIs are URIs that contain a certain kind of hash value that
-can be used to verify the respective resource. This is an example of a
-trusty URI:
-
-    http://example.org/r1.RAcbjcRIQozo2wBMq4WcCYkFAjRz0AX-Ux3PquZZrC68s
-
-The last 45 characters of this URI (everything that comes after `r1.`) are the
-artifact code of the trusty URI. The first two characters of the artifact code
-(`RA` in this example) define the type and version of the module. (Only `FA`
-for plain file content and `RA` for sets of RDF graphs are supported at this
-point.) The remaining 43 characters are the actual hash value. This hash can
-be used to check the content of the resource this URI represents.
-
-
-Implementations
----------------
-
-There are currently three (partial) implementations:
-
-- trustyuri-java: https://github.com/trustyuri/trustyuri-java
-- trustyuri-perl: https://github.com/trustyuri/trustyuri-perl
-- trustyuri-python: https://github.com/trustyuri/trustyuri-python
+See https://github.com/trustyuri/trustyuri.
 
 
 Basics
