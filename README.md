@@ -1,8 +1,8 @@
 Trusty URI Specification
 ========================
 
-This document contains the specification of the _trusty URI_ approach
-(previously called _hash-URIs_). See https://www.trustyuri.net.
+This document contains version 0 of the specification of the _trusty URI_
+approach (previously called _hash-URIs_). See https://www.trustyuri.net.
 
 
 Basics
