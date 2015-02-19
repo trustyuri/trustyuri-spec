@@ -2,8 +2,7 @@ Trusty URI Specification
 ========================
 
 This document contains the specification of the _trusty URI_ approach
-(previously called _hash-URIs_).
-See https://github.com/trustyuri/trustyuri.
+(previously called _hash-URIs_). See https://www.trustyuri.net.
 
 
 Basics
@@ -165,4 +164,3 @@ are serialized as a hash sign `#` followed by the escaped literal string.
 The actual computation of the hash data is identical to Module F: a SHA-256
 hash is generated for _s_ in UTF-8 encoding, two zero-bits are appended, and
 the result is transformed to Base64 notation.
-
