@@ -1,9 +1,10 @@
-Trusty URI Specification, Version 0
-===================================
+Trusty URI Specification - Version 0
+====================================
 
-_Tobias Kuhn, 20 May 2014_
+_Tobias Kuhn, 20 May 2014, http://www.trustyuri.net_
 
-http://www.trustyuri.net
+This document contains version 0 of the specification of the _trusty URI_
+approach (previously called _hash-URIs_).
 
 
 Basics
